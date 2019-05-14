@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Moodle-kysely</title>
+    <!--===============================================================================================-->
+    <link rel="icon" type="image/png" href="images/icons/favicon.ico" />
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="vendor/bootstrap/css/bootstrap.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="fonts/Linearicons-Free-v1.0.0/icon-font.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="vendor/animate/animate.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="vendor/css-hamburgers/hamburgers.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="vendor/select2/select2.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="css/util.css">
+    <link rel="stylesheet" type="text/css" href="css/main.css">
+    <!--===============================================================================================-->
+</head>
+
+<body>
+
+    <div class="container-contact100" style="background-image: url('images/bg-01.jpg');">
+        <div class="wrap-contact100">
+            <form>
+                <h1>Moodle-kysely</h1>
+                <br>
+                <p id="kuvaus">Tämän kyselyn tarkoituksena on kartoittaa Haaga-helian opiskelijoiden tyytyväisyyttä Moodlen toimintaan ja löytää mahdollisia kehittämiskohteita.</p><br>
+                <p>Minkä vuoden opiskelija olet?</p><br>
+                <input type="radio" name="kysymys1" value="1"> 1. vuoden<br>
+                <input type="radio" name="kysymys1" value="2"> 2. vuoden<br>
+                <input type="radio" name="kysymys1" value="3"> 3. vuoden<br>
+                <input type="radio" name="kysymys1" value="4"> Muu<br><br>
+                <p>Kuinka tyytyväinen olet kokonaisuutena Moodleen?</p><br>
+                <input type="radio" name="kysymys2" value="1"> Tyytymätön <br>
+                <input type="radio" name="kysymys2" value="2"> Melko tyytymätön<br>
+                <input type="radio" name="kysymys2" value="3"> En osaa sanoa/neutraali<br>
+                <input type="radio" name="kysymys2" value="4"> Melko tyytyväinen<br>
+                <input type="radio" name="kysymys2" value="5"> Tyytyväinen <br><br>
+                <p>Kuinka helppokäyttöinen Moodle mielestäsi on?</p><br>
+                <input type="radio" name="kysymys3" value="1"> Ei helppokäyttöinen <br>
+                <input type="radio" name="kysymys3" value="2"> Ei kovin helppokäyttöinen<br>
+                <input type="radio" name="kysymys3" value="3"> En osaa sanoa/neutraali<br>
+                <input type="radio" name="kysymys3" value="4"> Melko helppokäyttöinen<br>
+                <input type="radio" name="kysymys3" value="5"> Helppokäyttöinen <br><br>
+                <p>Kuinka hyvin Moodle pitää sinut ajan tasalla tärkeistä tapahtumista?</p><br>
+                <input type="radio" name="kysymys4" value="1"> Huonosti <br>
+                <input type="radio" name="kysymys4" value="2"> Melko huonosti<br>
+                <input type="radio" name="kysymys4" value="3"> En osaa sanoa/neutraali<br>
+                <input type="radio" name="kysymys4" value="4"> Melko hyvin<br>
+                <input type="radio" name="kysymys4" value="5"> Hyvin <br><br>
+                <p>Miten kehittäisit Moodlea?</p><br>
+                <textarea name="kysymys5" class="input100" placeholder="Kirjoita vastauksesi tähän!"></textarea><br>
+
+                <input type="submit" value="Lähetä vastauksesi!">
+            </form>
+        </div>
+    </div>
+
+
+
+    <div id="dropDownSelect1"></div>
+
+    <!--===============================================================================================-->
+    <script src="vendor/jquery/jquery-3.2.1.min.js"></script>
+    <!--===============================================================================================-->
+    <script src="vendor/bootstrap/js/popper.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+    <!--===============================================================================================-->
+    <script src="vendor/select2/select2.min.js"></script>
+    <!--===============================================================================================-->
+    <script src="js/main.js"></script>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-23581568-13"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+        gtag('js', new Date());
+
+        gtag('config', 'UA-23581568-13');
+
+    </script>
+
+</body>
+
+</html>

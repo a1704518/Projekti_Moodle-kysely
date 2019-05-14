@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Moodle-kysely</title>
     <!--===============================================================================================-->
-    <script src="vendor/jquery/jquery-3.2.1.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <!--===============================================================================================-->
     <script src="vendor/bootstrap/js/popper.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
@@ -32,47 +32,8 @@
     <link rel="stylesheet" type="text/css" href="css/util.css">
     <link rel="stylesheet" type="text/css" href="css/main.css">
     <!--===============================================================================================-->
-</head>
-
-<body>
-
-    <div class="container-contact100" style="background-image: url('images/bg-01.jpg');">
-        <div class="wrap-contact100">
-            <h1>Moodle-kysely</h1><br>
-            <p id="kuvaus">Tämän kyselyn tarkoituksena on kartoittaa Haaga-helian opiskelijoiden tyytyväisyyttä Moodlen toimintaan ja löytää mahdollisia kehittämiskohteita.</p><br>
-            <form class="contact100-form validate-form"> 
-            <div id="kysymykset"></div>
-            <div class="wrap-input100 validate-input" data-validate="Vastaus puuttuu!">
-                <textarea class="input100" name="message" placeholder="Kirjoita vastauksesi tähän..."></textarea>
-				</div>
-            <div class="container-contact100-form-btn">
-					<div class="wrap-contact100-form-btn">
-						<div class="contact100-form-bgbtn"></div>
-						<button class="contact100-form-btn">
-							Lähetä vastauksesi!
-						</button>
-					</div>
-				</div>
-            </form>
-        </div>
-    </div>
-    
-    <script>
-        var taulukko = [];
-        
-        
-        $.getJSON("https://softalaharjoitus.herokuapp.com/kysymykset", function(data) {
-            $.each(data, function (key, d) {
-                taulukko.push("<p class=kysymys>" + d.kysymys + "<br><br>");
-            });
-            $("#kysymykset").append(taulukko.join(""));
-        });
-
-    </script>
-
-
     <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-23581568-13"></script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-138882324-1"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
 
@@ -81,11 +42,122 @@
         }
         gtag('js', new Date());
 
-        gtag('config', 'UA-23581568-13');
+        gtag('config', 'UA-138882324-1');
 
     </script>
+</head>
+
+<body>
+
+    <div class="container-contact100" style="background-image: url('images/bg-01.jpg');">
+        <div class="wrap-contact100">
+            <h1>Moodle-kysely</h1><br>
+            <p id="kuvaus">Tämän kyselyn tarkoituksena on kartoittaa Haaga-helian opiskelijoiden tyytyväisyyttä Moodlen toimintaan ja löytää mahdollisia kehittämiskohteita.</p><br>
+            <form id="lomake" class="contact100-form validate-form">
+                <div id="kysymykset"></div>
+                <div class="wrap-input100 validate-input" data-validate="Vastaus puuttuu!">
+
+                </div>
+                <div class="container-contact100-form-btn">
+                    <div class="wrap-contact100-form-btn">
+                        <div class="contact100-form-bgbtn"></div>
+                        <button class="contact100-form-btn" onclick=laheta()>
+                            Lähetä vastauksesi!
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        var tunnukset = [];
+
+        $.getJSON("https://softalaharjoitus-test2.herokuapp.com/kysely/1/kysymykset", function(data) {
+            var taulukko = [];
+
+            $.each(data, function(key, d) {
+                taulukko.push("<br><p class=kysymys>" + d.kysymys + "</p><br>");
+                if (d.kysymystyyppi == "avoin") {
+                    taulukko.push("<textarea class=input100 id=" + d.kysymysId + " ></textarea><br>");
+                    tunnukset.push(d.kysymysId);
+
+                } else if (d.kysymystyyppi == "radio") {
+                    for (i = 0; i < d.vaihtoehdot.length; i++) {
+                        taulukko.push("<input type=" + d.kysymystyyppi + " id= " + d.kysymysId + " name=" + d.kysymysId + " value='" + d.vaihtoehdot[i].vaihtoehto + "'> " + d.vaihtoehdot[i].vaihtoehto + "<br>");
 
 
+                    }
+                    tunnukset.push(d.kysymysId);
+                }
+
+            })
+            $("#kysymykset").append(taulukko.join(""));
+        });
+
+
+
+        function laheta() {
+            for (i = 0; i < tunnukset.length; i++) {
+
+                tyyppi = document.getElementById(tunnukset[i]).type;
+
+                if (tyyppi == "textarea") {
+                    vastaus = document.getElementById(tunnukset[i]).value;
+
+                    var jsonData = {
+                    "vastaus": vastaus
+                }
+
+                var osoite = 'https://softalaharjoitus-test2.herokuapp.com/lisaaVastaus/' + tunnukset[i];
+
+                $.ajax({
+                    url: osoite,
+                    async: false,
+                    type: 'POST',
+                    dataType: 'application/json',
+                    contentType: 'application/json',
+                    data: JSON.stringify(jsonData)
+                });
+
+
+                }
+
+                if (tyyppi == "radio") {
+
+
+                    var radios = document.getElementsByName(tunnukset[i]);
+                    for (var x = 0, length = radios.length; x < length; x++) {
+                        if (radios[x].checked) {
+                            vastaus = radios[x].value;
+                        }
+
+                    }
+
+
+                    var jsonData = {
+                        "vastaus": vastaus
+                    }
+
+                    var osoite = 'https://softalaharjoitus-test2.herokuapp.com/lisaaVastaus/' + tunnukset[i];
+
+                    $.ajax({
+                        url: osoite,
+                        async: false,
+                        type: 'POST',
+                        dataType: 'application/json',
+                        contentType: 'application/json',
+                        data: JSON.stringify(jsonData),
+                        success: function() { alert('POST completed. Data:' + myJSON)}
+                    });
+                    
+                }
+
+            }
+
+        };
+
+    </script>
 
 </body>
 

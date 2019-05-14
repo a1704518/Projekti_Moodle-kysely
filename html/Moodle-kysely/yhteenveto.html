@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Moodle-kysely</title>
+    <!--===============================================================================================-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <!--===============================================================================================-->
+    <script src="vendor/bootstrap/js/popper.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+    <!--===============================================================================================-->
+    <script src="vendor/select2/select2.min.js"></script>
+    <!--===============================================================================================-->
+    <script src="js/main.js"></script>
+    <!--===============================================================================================-->
+    <link rel="icon" type="image/png" href="images/icons/favicon.ico" />
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="vendor/bootstrap/css/bootstrap.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="fonts/Linearicons-Free-v1.0.0/icon-font.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="vendor/animate/animate.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="vendor/css-hamburgers/hamburgers.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="vendor/select2/select2.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="css/util.css">
+    <link rel="stylesheet" type="text/css" href="css/main.css">
+    <!--===============================================================================================-->
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-138882324-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+        gtag('js', new Date());
+
+        gtag('config', 'UA-138882324-1');
+
+    </script>
+</head>
+
+<body>
+
+    <div class="container-contact100" style="background-image: url('images/bg-01.jpg');">
+        <div class="wrap-contact100">
+            <h1>Moodle-kysely</h1><br>
+            <p id="kuvaus">Kiitos vastauksistasi!<br>
+            Tässä näet yhteenvedon kyselyn tämänhetkisistä vastauksista:</p><br>
+            <div id="kysymys1chart_div"></div>
+            <div id="kysymys2chart_div"></div>
+            <div id="kysymys3chart_div"></div>
+            <div id="kysymys4chart_div"></div>
+
+            <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+            <script type="text/javascript">
+                // Load the Visualization API and the corechart package.
+                google.charts.load('current', {
+                    'packages': ['corechart']
+                });
+
+                // Set a callback to run when the Google Visualization API is loaded.
+                google.charts.setOnLoadCallback(drawKysymys1Chart);
+                google.charts.setOnLoadCallback(drawKysymys2Chart);
+                google.charts.setOnLoadCallback(drawKysymys3Chart);
+                google.charts.setOnLoadCallback(drawKysymys4Chart);
+
+
+                        // Callback that creates and populates a data table,
+                        // instantiates the pie chart, passes in the data and
+                        // draws it.
+                        function drawKysymys1Chart() {
+                            var v1 = 0;
+                            var v2 = 0;
+                            var v3 = 0;
+                            var v4 = 0;
+                            $.getJSON("https://softalaharjoitus-test2.herokuapp.com/kysymyksenVastaukset/2", function(data) {
+                            $.each(data, function(key, d) {
+                                if (d.vastaus == "1. vuoden") {
+                                    v1 += 1;
+                                }
+                                if (d.vastaus == "2. vuoden") {
+                                    v2 += 1;
+                                }
+                                if (d.vastaus == "3. vuoden") {
+                                    v3 += 1;
+                                }
+                                if (d.vastaus == "Muu") {
+                                    v4 += 1;
+                                }
+                            })
+                        
+
+                            // Create the data table.
+                            var data = new google.visualization.DataTable();
+                            data.addColumn('string', 'vastausvaihtoehdot');
+                            data.addColumn('number', 'vastauksienmaara');
+                            data.addRows([
+                                ['1. vuoden', v1],
+                                ['2. vuoden', v2],
+                                ['3. vuoden', v3],
+                                ['Muu', v4]
+                            ]);
+
+                            // Set chart options
+                            var options = {
+                                'title': 'Minkä vuoden opiskelija olet?',
+                                'width': 500,
+                                'height': 300,
+                                'colors': ['#760aaf', '#0f076a', '#1674c4', '#21aa90', '#0cd433'],
+                                'is3D': 'true'
+                            };
+
+                            // Instantiate and draw our chart, passing in some options.
+                            var chart = new google.visualization.PieChart(document.getElementById('kysymys1chart_div'));
+                            chart.draw(data, options);
+                        })
+                        }
+                
+                function drawKysymys2Chart() {
+                            var v1 = 0;
+                            var v2 = 0;
+                            var v3 = 0;
+                            var v4 = 0;
+                            var v5 = 0;
+                            $.getJSON("https://softalaharjoitus-test2.herokuapp.com/kysymyksenVastaukset/3", function(data) {
+                            $.each(data, function(key, d) {
+                                if (d.vastaus == "Tyytymätön") {
+                                    v1 += 1;
+                                }
+                                if (d.vastaus == "Melko tyytymätön") {
+                                    v2 += 1;
+                                }
+                                if (d.vastaus == "En osaa sanoa/neutraali") {
+                                    v3 += 1;
+                                }
+                                if (d.vastaus == "Melko tyytyväinen") {
+                                    v4 += 1;
+                                }
+                                if (d.vastaus == "Tyytyväinen") {
+                                    v5 += 1;
+                                }
+                            })
+                        
+
+                            // Create the data table.
+                            var data = new google.visualization.DataTable();
+                            data.addColumn('string', 'vastausvaihtoehdot');
+                            data.addColumn('number', 'vastauksienmaara');
+                            data.addRows([
+                                ['Tyytymätön', v1],
+                                ['Melko tyytymätön', v2],
+                                ['En osaa sanoa/neutraali', v3],
+                                ['Melko tyytyväinen', v4],
+                                ['Tyytyväinen', v5]
+                            ]);
+
+                            // Set chart options
+                            var options = {
+                                'title': 'Kuinka tyytyväinen olet kokonaisuutena Moodleen?',
+                                'width': 500,
+                                'height': 300,
+                                'colors': ['#760aaf', '#0f076a', '#1674c4', '#21aa90', '#0cd433'],
+                                'is3D': 'true'
+                            };
+
+                            // Instantiate and draw our chart, passing in some options.
+                            var chart = new google.visualization.PieChart(document.getElementById('kysymys2chart_div'));
+                            chart.draw(data, options);
+                        })
+                        }
+                
+                function drawKysymys3Chart() {
+                            var v1 = 0;
+                            var v2 = 0;
+                            var v3 = 0;
+                            var v4 = 0;
+                            var v5 = 0;
+                            $.getJSON("https://softalaharjoitus-test2.herokuapp.com/kysymyksenVastaukset/4", function(data) {
+                            $.each(data, function(key, d) {
+                                if (d.vastaus == "Ei helppokäyttöinen") {
+                                    v1 += 1;
+                                }
+                                if (d.vastaus == "Ei kovin helppokäyttöinen") {
+                                    v2 += 1;
+                                }
+                                if (d.vastaus == "En osaa sanoa/neutraali") {
+                                    v3 += 1;
+                                }
+                                if (d.vastaus == "Melko helppokäyttöinen") {
+                                    v4 += 1;
+                                }
+                                if (d.vastaus == "Helppokäyttöinen") {
+                                    v5 += 1;
+                                }
+                            })
+                        
+
+                            // Create the data table.
+                            var data = new google.visualization.DataTable();
+                            data.addColumn('string', 'vastausvaihtoehdot');
+                            data.addColumn('number', 'vastauksienmaara');
+                            data.addRows([
+                                ['Ei helppokäyttöinen', v1],
+                                ['Ei kovin helppokäyttöinen', v2],
+                                ['En osaa sanoa/neutraali', v3],
+                                ['Melko helppokäyttöinen', v4],
+                                ['Helppokäyttöinen', v5]
+                            ]);
+
+                            // Set chart options
+                            var options = {
+                                'title': 'Kuinka helppokäyttöinen Moodle mielestäsi on?',
+                                'width': 500,
+                                'height': 300,
+                                'colors': ['#760aaf', '#0f076a', '#1674c4', '#21aa90', '#0cd433'],
+                                'is3D': 'true'
+                            };
+
+                            // Instantiate and draw our chart, passing in some options.
+                            var chart = new google.visualization.PieChart(document.getElementById('kysymys3chart_div'));
+                            chart.draw(data, options);
+                        })
+                        }
+                
+                function drawKysymys4Chart() {
+                            var v1 = 0;
+                            var v2 = 0;
+                            var v3 = 0;
+                            var v4 = 0;
+                            var v5 = 0;
+                            $.getJSON("https://softalaharjoitus-test2.herokuapp.com/kysymyksenVastaukset/5", function(data) {
+                            $.each(data, function(key, d) {
+                                if (d.vastaus == "Huonosti") {
+                                    v1 += 1;
+                                }
+                                if (d.vastaus == "Melko huonosti") {
+                                    v2 += 1;
+                                }
+                                if (d.vastaus == "En osaa sanoa/neutraali") {
+                                    v3 += 1;
+                                }
+                                if (d.vastaus == "Melko hyvin") {
+                                    v4 += 1;
+                                }
+                                if (d.vastaus == "Hyvin") {
+                                    v5 += 1;
+                                }
+                            })
+                        
+
+                            // Create the data table.
+                            var data = new google.visualization.DataTable();
+                            data.addColumn('string', 'vastausvaihtoehdot');
+                            data.addColumn('number', 'vastauksienmaara');
+                            data.addRows([
+                                ['Huonosti', v1],
+                                ['Melko huonosti', v2],
+                                ['En osaa sanoa/neutraali', v3],
+                                ['Melko hyvin', v4],
+                                ['Hyvin', v5]
+                            ]);
+
+                            // Set chart options
+                            var options = {
+                                'title': 'Kuinka hyvin Moodle pitää sinut ajan tasalla tärkeistä tapahtumista?',
+                                'width': 500,
+                                'height': 300,
+                                'colors': ['#760aaf', '#0f076a', '#1674c4', '#21aa90', '#0cd433'],
+                                'is3D': 'true'
+                            };
+
+                            // Instantiate and draw our chart, passing in some options.
+                            var chart = new google.visualization.PieChart(document.getElementById('kysymys4chart_div'));
+                            chart.draw(data, options);
+                        })
+                        }
+
+            </script>
+            <a href="index.html">Takaisin kyselyyn</a>
+        </div>
+    </div>
+
+</body>
+
+</html>
